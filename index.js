@@ -1,5 +1,5 @@
-const puppeteer = require("puppeteer");
-fs = require("fs");
+const puppeteer = require('puppeteer');
+fs = require('fs');
 (async (event) => {
   const browser = await puppeteer.launch();
 
@@ -7,7 +7,7 @@ fs = require("fs");
     const page = await browser.newPage();
     await page.goto(
       `https://playoverwatch.com/en-us/career/pc/SneakyTurtle-1146956/`,
-      { waitUntil: "networkidle0" }
+      { waitUntil: 'networkidle0' }
     );
 
     const HEROES = await page.evaluate(() =>
@@ -28,35 +28,35 @@ fs = require("fs");
         let stats = {};
         STAT_DIVS[i].forEach((stat) => {
           stat
-            .querySelectorAll("div > div > table > tbody > tr")
+            .querySelectorAll('div > div > table > tbody > tr')
             .forEach((row) => {
               stats[row.cells[0].innerText] = row.cells[1].innerText;
             });
         });
         characterStats.push({
-          character: "",
-          playType: "",
+          character: '',
+          playType: '',
           stats,
         });
       }
       return characterStats;
     });
 
-    let playType = "QUICK PLAY";
+    let playType = 'QUICK PLAY';
 
     await browser.close();
 
     for (let i = 0; i < HERO_STATS.length; i++) {
       let hero = HEROES[i];
-      if (i > 0 && hero === "ALL HEROES") {
-        playType = "COMPETITIVE PLAY";
+      if (i > 0 && hero === 'ALL HEROES') {
+        playType = 'COMPETITIVE PLAY';
       }
 
       HERO_STATS[i].character = hero;
       HERO_STATS[i].playType = playType;
     }
 
-    fs.writeFile("./data.json", JSON.stringify(HERO_STATS), (err) =>
+    fs.writeFile('./data.json', JSON.stringify(HERO_STATS), (err) =>
       console.log(err)
     );
   } catch (error) {
