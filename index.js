@@ -1,16 +1,22 @@
 const puppeteer = require('puppeteer');
 fs = require('fs');
 (async (event) => {
+  console.log('Launching browser...');
+
   const browser = await puppeteer.launch({
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
   });
 
   try {
+    console.log('Navigating to page...');
+
     const page = await browser.newPage();
     await page.goto(
       `https://playoverwatch.com/en-us/career/pc/SneakyTurtle-1146956/`,
       { waitUntil: 'networkidle0' }
     );
+
+    console.log('Getting heroes...');
 
     const HEROES = await page.evaluate(() =>
       Array.from(
@@ -18,6 +24,8 @@ fs = require('fs');
         (option) => option.innerText
       )
     );
+
+    console.log('Getting stats...');
 
     const HERO_STATS = await page.evaluate(() => {
       let characterStats = [];
@@ -46,6 +54,7 @@ fs = require('fs');
 
     let playType = 'QUICK PLAY';
 
+    console.log('Closing browser...');
     await browser.close();
 
     for (let i = 0; i < HERO_STATS.length; i++) {
@@ -61,6 +70,8 @@ fs = require('fs');
     fs.writeFile('./data.json', JSON.stringify(HERO_STATS), (err) =>
       console.log(err)
     );
+    console.log('Shutting down...');
+    
   } catch (error) {
     console.log(error);
     await browser.close();
