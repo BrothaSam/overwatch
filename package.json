@@ -4,13 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "NODE_ENV=development node index.js",
+    "start:production": "NODE_ENV=production node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^8.2.0",
+    "influxdb-v2": "0.0.5",
+    "moment": "^2.27.0",
     "puppeteer": "^5.0.0",
     "puppeteer-core": "^5.0.0"
   }

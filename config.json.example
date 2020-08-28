@@ -1,0 +1,14 @@
+{
+  "org": "org_name_here",
+  "bucket": "bucket_name_here",
+  "profiles": [
+    {
+      "name": "play_id_here",
+      "systems": ["pc","psn","xbl"]
+    },
+    {
+      "name": "play_id2_here",
+      "systems": ["pc","psn","xbl"]
+    },
+  ]
+}
